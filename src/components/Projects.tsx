@@ -2,7 +2,15 @@
 
 import { ArrowUpRight } from "lucide-react";
 import { projects } from "@/data/content";
-import { Reveal, SectionMark, Stagger, StaggerItem } from "@/components/motion";
+import {
+  ProjectCard,
+  Reveal,
+  ScrollDrift,
+  SectionMark,
+  Stagger,
+  StaggerItem,
+  WordReveal,
+} from "@/components/motion";
 
 export function Projects() {
   return (
@@ -12,17 +20,22 @@ export function Projects() {
     >
       <div className="section-pad container-wide py-16 sm:py-24 md:py-32">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between lg:gap-6">
-          <Reveal>
+          <div className="min-w-0">
             <SectionMark number="04" label="Projects" tone="light" />
-            <h2 className="display mt-5 max-w-3xl text-[clamp(1.85rem,8vw,4.2rem)]">
-              Projects that became real systems.
-            </h2>
-            <p className="mt-4 max-w-xl text-sm text-white/60 sm:text-base">
-              Each one a chapter — assessment platforms, live proctoring,
-              self-hosted storage, and AI products.
-            </p>
-          </Reveal>
-          <Reveal delay={0.1} variant="right">
+            <ScrollDrift amount={22} className="mt-5">
+              <WordReveal
+                text="Projects that became real systems."
+                className="display max-w-3xl text-[clamp(1.85rem,8vw,4.2rem)]"
+              />
+            </ScrollDrift>
+            <Reveal delay={0.15} variant="fade" className="mt-4 max-w-xl">
+              <p className="text-sm text-white/60 sm:text-base">
+                Each one a chapter — assessment platforms, live proctoring,
+                self-hosted storage, and AI products.
+              </p>
+            </Reveal>
+          </div>
+          <Reveal delay={0.25} variant="right">
             <a
               href="https://github.com/Ujwal1410"
               target="_blank"
@@ -36,11 +49,12 @@ export function Projects() {
 
         <Stagger
           className="mt-10 grid gap-4 sm:mt-14 sm:gap-5 md:grid-cols-2 xl:grid-cols-3"
-          delay={0.09}
+          delay={0.12}
+          amount={0.06}
         >
-          {projects.map((project) => (
-            <StaggerItem key={project.id} variant="up">
-              <article className="group flex h-full flex-col border border-white/12 bg-white/[0.03] p-5 transition duration-300 hover:-translate-y-1.5 hover:border-[#e8ff2b]/50 hover:bg-white/[0.06] sm:p-6">
+          {projects.map((project, i) => (
+            <StaggerItem key={project.id} variant="card">
+              <ProjectCard>
                 <div className="flex items-start justify-between gap-3">
                   <span
                     className="rounded-sm bg-[#e8ff2b] px-2 py-1 text-[10px] font-semibold tracking-wider text-[#0b0b0b]"
@@ -54,6 +68,9 @@ export function Projects() {
                 </div>
 
                 <h3 className="mt-5 text-xl font-semibold tracking-tight transition group-hover:text-[#e8ff2b] sm:text-2xl">
+                  <span className="mr-2 font-mono text-sm text-white/25">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                   {project.title}
                 </h3>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-white/65">
@@ -95,7 +112,7 @@ export function Projects() {
                     <ArrowUpRight className="h-3.5 w-3.5" />
                   </a>
                 )}
-              </article>
+              </ProjectCard>
             </StaggerItem>
           ))}
         </Stagger>

@@ -6,11 +6,12 @@ import { Journey } from "@/components/Journey";
 import { Navbar } from "@/components/Navbar";
 import { Projects } from "@/components/Projects";
 import { ScrollProgress } from "@/components/ScrollProgress";
+import { SmoothScroll } from "@/components/SmoothScroll";
 import { Stack } from "@/components/Stack";
 
 export default function Home() {
   return (
-    <>
+    <SmoothScroll>
       <Navbar />
       <ScrollProgress />
       <Assistant />
@@ -22,6 +23,6 @@ export default function Home() {
         <Stack />
         <Contact />
       </main>
-    </>
+    </SmoothScroll>
   );
 }

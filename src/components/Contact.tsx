@@ -4,23 +4,36 @@ import { Mail, Phone } from "lucide-react";
 import { site } from "@/data/content";
 import { GitHubIcon, LinkedInIcon } from "@/components/icons";
 import { ContactForm } from "@/components/ContactForm";
-import { Magnetic, Reveal, SectionMark } from "@/components/motion";
+import {
+  Magnetic,
+  Reveal,
+  ScrollDrift,
+  SectionMark,
+  WordReveal,
+} from "@/components/motion";
 
 export function Contact() {
   return (
     <section id="contact" className="surface-dots">
       <div className="section-pad container-wide py-16 pb-28 sm:py-24 md:py-32">
-        <Reveal>
-          <SectionMark number="07" label="Next" />
-          <h2 className="display mt-5 max-w-4xl text-[clamp(2.2rem,8vw,5.5rem)] text-ink">
-            Let&apos;s build something solid.
-          </h2>
-          <p className="mt-5 max-w-xl text-sm text-dim sm:text-base md:text-lg">
+        <SectionMark number="07" label="Next" />
+        <ScrollDrift amount={26} className="mt-5">
+          <WordReveal
+            text="Let's build something solid."
+            className="display max-w-4xl text-[clamp(2.2rem,8vw,5.5rem)] text-ink"
+          />
+        </ScrollDrift>
+
+        <Reveal delay={0.15} variant="fade" className="mt-5 max-w-xl">
+          <p className="text-sm text-dim sm:text-base md:text-lg">
             {site.availability}. Based in {site.location}.
           </p>
         </Reveal>
 
-        <Reveal delay={0.08} className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap">
+        <Reveal
+          delay={0.2}
+          className="mt-8 flex flex-col gap-3 min-[480px]:flex-row min-[480px]:flex-wrap"
+        >
           <Magnetic className="w-full min-[480px]:w-auto">
             <a
               href={`mailto:${site.email}`}
@@ -40,12 +53,12 @@ export function Contact() {
           </Magnetic>
         </Reveal>
 
-        <Reveal delay={0.12}>
+        <Reveal delay={0.26} variant="rise">
           <ContactForm />
         </Reveal>
 
         <Reveal
-          delay={0.16}
+          delay={0.32}
           className="mt-10 flex flex-wrap gap-6"
           variant="fade"
         >

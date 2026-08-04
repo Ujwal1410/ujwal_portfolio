@@ -1,0 +1,28 @@
+"use client";
+
+import { ReactLenis } from "lenis/react";
+import { useReducedMotion } from "framer-motion";
+import type { ReactNode } from "react";
+
+export function SmoothScroll({ children }: { children: ReactNode }) {
+  const reduce = useReducedMotion();
+
+  if (reduce) {
+    return <>{children}</>;
+  }
+
+  return (
+    <ReactLenis
+      root
+      options={{
+        autoRaf: true,
+        lerp: 0.08,
+        smoothWheel: true,
+        wheelMultiplier: 0.9,
+        touchMultiplier: 1.1,
+      }}
+    >
+      {children}
+    </ReactLenis>
+  );
+}
