@@ -1,26 +1,185 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f1f0ec;
+  --paper-raised: #fbfaf7;
+  --ink: #0b0b0b;
+  --ink-soft: #161616;
+  --line: rgba(11, 11, 11, 0.14);
+  --dim: rgba(11, 11, 11, 0.55);
+  --volt: #e8ff2b;
+  --volt-ink: #1a2200;
+  --red: #e0392d;
+  --blue: #2454ff;
+  --shadow: 0 18px 45px rgba(11, 11, 11, 0.1);
+  --texture-dot: rgba(11, 11, 11, 0.1);
+}
+
+.dark {
+  --paper: #0b0b0b;
+  --paper-raised: #141414;
+  --ink: #f1f0ec;
+  --ink-soft: #e8e7e2;
+  --line: rgba(241, 240, 236, 0.16);
+  --dim: rgba(241, 240, 236, 0.62);
+  --volt: #e8ff2b;
+  --volt-ink: #0b0b0b;
+  --shadow: 0 18px 45px rgba(0, 0, 0, 0.45);
+  --texture-dot: rgba(241, 240, 236, 0.08);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-paper-raised: var(--paper-raised);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-dim: var(--dim);
+  --color-volt: var(--volt);
+  --color-volt-ink: var(--volt-ink);
+  --color-red: var(--red);
+  --color-blue: var(--blue);
+  --font-display: var(--font-anton);
+  --font-sans: var(--font-archivo);
+  --font-label: var(--font-oswald);
+  --font-mono: var(--font-jetbrains);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-behavior: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-archivo), system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--volt);
+  color: var(--volt-ink);
+}
+
+.surface-dots {
+  background-image: radial-gradient(
+    var(--texture-dot) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+.display {
+  font-family: var(--font-anton), Impact, sans-serif;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  line-height: 0.95;
+}
+
+.label {
+  font-family: var(--font-oswald), "Arial Narrow", sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.mono {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+}
+
+.section-pad {
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+.container-wide {
+  width: min(1200px, 100%);
+  margin-inline: auto;
+}
+
+.container-reading {
+  width: min(760px, 100%);
+  margin-inline: auto;
+}
+
+.volt-btn {
+  background: var(--volt);
+  color: var(--volt-ink);
+  font-family: var(--font-oswald), sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.volt-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(232, 255, 43, 0.35);
+}
+
+.outline-btn {
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  font-family: var(--font-oswald), sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.outline-btn:hover {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.dark .outline-btn:hover {
+  color: var(--paper);
+}
+
+.ink-btn {
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--font-oswald), sans-serif;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.ink-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.nav-link {
+  font-family: var(--font-oswald), sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  opacity: 0.72;
+  transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link[data-active="true"] {
+  opacity: 1;
+  color: var(--volt);
+}
+
+@keyframes pulse-line {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scaleY(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+.scroll-cue {
+  animation: pulse-line 2.4s ease-in-out infinite;
+  transform-origin: center;
 }
