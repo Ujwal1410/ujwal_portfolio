@@ -18,14 +18,14 @@ export function Navbar() {
   const { dark, ready, toggle } = useTheme();
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#0b0b0b] text-[#f1f0ec]">
-      <div className="section-pad mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-3">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#0b0b0b] pt-[env(safe-area-inset-top)] text-[#f1f0ec]">
+      <div className="section-pad mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-2 sm:gap-3">
         <a href="#top" className="flex min-w-0 items-center gap-2 sm:gap-3">
           <span className="grid h-7 w-7 shrink-0 place-items-center border border-white/40 text-[10px] font-bold tracking-widest">
             UK
           </span>
-          <span className="label truncate text-[10px] tracking-[0.18em] sm:text-[11px] sm:tracking-[0.22em]">
-            <span className="sm:hidden">{site.name}</span>
+          <span className="label truncate text-[10px] tracking-[0.16em] sm:text-[11px] sm:tracking-[0.22em]">
+            <span className="hidden min-[360px]:inline sm:hidden">{site.name}</span>
             <span className="hidden sm:inline">{site.fullName}</span>
           </span>
         </a>

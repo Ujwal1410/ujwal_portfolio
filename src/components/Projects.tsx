@@ -25,7 +25,7 @@ export function Projects() {
             <ScrollDrift amount={22} className="mt-5">
               <WordReveal
                 text="Projects that became real systems."
-                className="display max-w-3xl text-[clamp(1.85rem,8vw,4.2rem)]"
+                className="display max-w-3xl text-[clamp(1.65rem,7.5vw,4.2rem)]"
               />
             </ScrollDrift>
             <Reveal delay={0.15} variant="fade" className="mt-4 max-w-xl">

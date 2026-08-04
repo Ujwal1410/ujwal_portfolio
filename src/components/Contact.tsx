@@ -15,12 +15,12 @@ import {
 export function Contact() {
   return (
     <section id="contact" className="surface-dots">
-      <div className="section-pad container-wide py-16 pb-28 sm:py-24 md:py-32">
+      <div className="section-pad container-wide py-16 pb-[max(7rem,calc(5rem+env(safe-area-inset-bottom)))] sm:py-24 md:py-32">
         <SectionMark number="07" label="Next" />
         <ScrollDrift amount={26} className="mt-5">
           <WordReveal
             text="Let's build something solid."
-            className="display max-w-4xl text-[clamp(2.2rem,8vw,5.5rem)] text-ink"
+            className="display max-w-4xl text-[clamp(1.85rem,8vw,5.5rem)] text-ink"
           />
         </ScrollDrift>
 

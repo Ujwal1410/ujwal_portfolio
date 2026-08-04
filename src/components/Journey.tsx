@@ -34,7 +34,7 @@ export function Journey() {
           <ScrollDrift amount={28} className="mt-5">
             <WordReveal
               text={journeyProblem.title}
-              className="display max-w-4xl text-[clamp(1.85rem,8vw,4.4rem)]"
+              className="display max-w-4xl text-[clamp(1.65rem,7.5vw,4.4rem)]"
             />
           </ScrollDrift>
 
@@ -102,7 +102,7 @@ export function Journey() {
           <ScrollDrift amount={24} className="mt-5">
             <WordReveal
               text="I organize chaos into systems that ship and stay up."
-              className="display max-w-4xl text-[clamp(1.85rem,8vw,4.2rem)] text-ink"
+              className="display max-w-4xl text-[clamp(1.65rem,7.5vw,4.2rem)] text-ink"
             />
           </ScrollDrift>
 

@@ -179,7 +179,7 @@ export function WordReveal({
   );
 }
 
-/** Mild horizontal drift while section scrolls — single layer only */
+/** Mild horizontal drift while section scrolls — desktop only (overflow on phones) */
 export function ScrollDrift({
   children,
   className = "",
@@ -191,6 +191,16 @@ export function ScrollDrift({
 }) {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
+  const [enabled, setEnabled] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px) and (pointer: fine)");
+    const sync = () => setEnabled(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
@@ -198,11 +208,11 @@ export function ScrollDrift({
   const x = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    reduce ? [0, 0, 0] : [amount, 0, -amount]
+    reduce || !enabled ? [0, 0, 0] : [amount, 0, -amount]
   );
 
   return (
-    <motion.div ref={ref} style={{ x }} className={className}>
+    <motion.div ref={ref} style={{ x }} className={`min-w-0 ${className}`}>
       {children}
     </motion.div>
   );
@@ -456,18 +466,27 @@ export function ProjectCard({ children }: { children: ReactNode }) {
 /** Floating chaos chips — Marcelo problem-section energy */
 export function ChaosField({ tags }: { tags: string[] }) {
   const reduce = useReducedMotion();
+  const [float, setFloat] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px) and (pointer: fine)");
+    const sync = () => setFloat(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   return (
     <Stagger
-      className="relative mt-10 grid min-h-[140px] grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4"
+      className="relative mt-8 grid grid-cols-2 gap-2.5 sm:mt-10 sm:min-h-[140px] sm:grid-cols-4 sm:gap-4"
       delay={0.08}
     >
       {tags.map((tag, i) => (
         <StaggerItem key={tag} variant="scale">
           <motion.span
-            className="mono inline-flex w-full items-center justify-center border border-white/15 bg-white/[0.03] px-3 py-3 text-center text-[10px] text-white/70 sm:text-[11px]"
+            className="mono inline-flex w-full items-center justify-center border border-white/15 bg-white/[0.03] px-2.5 py-2.5 text-center text-[9px] leading-snug text-white/70 sm:px-3 sm:py-3 sm:text-[11px]"
             animate={
-              reduce
+              reduce || !float
                 ? undefined
                 : {
                     y: [0, i % 2 === 0 ? -6 : 6, 0],
@@ -498,8 +517,17 @@ export function Magnetic({
   strength?: number;
 }) {
   const reduce = useReducedMotion();
+  const [enabled, setEnabled] = useState(false);
 
-  if (reduce) {
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px) and (pointer: fine)");
+    const sync = () => setEnabled(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
+  if (reduce || !enabled) {
     return <div className={className}>{children}</div>;
   }
 

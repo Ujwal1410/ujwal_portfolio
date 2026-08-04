@@ -32,8 +32,17 @@ const heroItem = {
 export function Hero() {
   const reduce = useReducedMotion();
   const [showGate, setShowGate] = useState(true);
+  const [isMobile, setIsMobile] = useState(true);
   const portraitRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
 
   const { scrollYProgress } = useScroll({
     target: portraitRef,
@@ -42,12 +51,12 @@ export function Hero() {
   const portraitY = useTransform(
     scrollYProgress,
     [0, 1],
-    reduce ? [0, 0] : [40, -40]
+    reduce || isMobile ? [0, 0] : [40, -40]
   );
   const portraitScale = useTransform(
     scrollYProgress,
     [0, 0.5, 1],
-    reduce ? [1, 1, 1] : [1.06, 1, 1.04]
+    reduce || isMobile ? [1, 1, 1] : [1.06, 1, 1.04]
   );
 
   const { scrollYProgress: sectionProgress } = useScroll({
@@ -57,7 +66,7 @@ export function Hero() {
   const watermarkY = useTransform(
     sectionProgress,
     [0, 1],
-    reduce ? [0, 0] : [0, 120]
+    reduce || isMobile ? [0, 0] : [0, 120]
   );
 
   useEffect(() => {
@@ -69,6 +78,10 @@ export function Hero() {
       if (Math.abs(e.deltaY) < 2) return;
       e.preventDefault();
       dismiss();
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      // First intentional swipe dismisses gate on Samsung / iOS
+      if (e.touches.length) dismiss();
     };
     const onKey = (e: KeyboardEvent) => {
       if (
@@ -84,10 +97,12 @@ export function Hero() {
 
     document.body.style.overflow = "hidden";
     window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
     window.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = "";
       window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchmove", onTouchMove);
       window.removeEventListener("keydown", onKey);
     };
   }, [showGate]);
@@ -96,7 +111,7 @@ export function Hero() {
     <section
       ref={sectionRef}
       id="top"
-      className="relative flex min-h-[100svh] flex-col justify-center overflow-hidden surface-dots pt-16 pb-16 sm:pt-14"
+      className="relative flex min-h-[100svh] flex-col justify-center overflow-x-hidden overflow-y-hidden surface-dots pb-20 pt-[calc(4rem+env(safe-area-inset-top))] sm:pb-16 sm:pt-14"
     >
       <AnimatePresence>
         {showGate && (
@@ -156,13 +171,13 @@ export function Hero() {
         variants={heroContainer}
         initial="hidden"
         animate={showGate ? "hidden" : "show"}
-        className="section-pad container-wide relative z-10 grid items-center gap-8 py-10 sm:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:py-16"
+        className="section-pad container-wide relative z-10 grid min-w-0 items-center gap-6 py-8 sm:gap-8 sm:py-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-10 lg:py-16"
         style={{ pointerEvents: showGate ? "none" : "auto" }}
       >
         <div className="relative min-w-0">
           <motion.span
             style={{ y: watermarkY }}
-            className="display pointer-events-none absolute -left-1 -top-6 text-[clamp(3.5rem,22vw,11rem)] text-ink/10 sm:-top-8 lg:-top-14"
+            className="display pointer-events-none absolute -left-1 -top-5 text-[clamp(3rem,18vw,11rem)] text-ink/10 sm:-top-8 lg:-top-14"
             aria-hidden
           >
             01
@@ -176,51 +191,51 @@ export function Hero() {
           </motion.p>
           <motion.p
             variants={heroItem}
-            className="relative mt-4 max-w-xl text-xs uppercase tracking-[0.08em] text-dim sm:mt-5 sm:text-sm md:text-base"
+            className="relative mt-3 max-w-xl text-[11px] uppercase leading-snug tracking-[0.08em] text-dim sm:mt-5 sm:text-sm md:text-base"
           >
             {site.role}
           </motion.p>
 
-          <motion.div variants={heroItem} className="relative mt-2 sm:mt-3">
+          <motion.div variants={heroItem} className="relative mt-2 min-w-0 sm:mt-3">
             {!showGate ? (
               <WordReveal
                 text={site.name}
                 as="h1"
-                className="display break-words text-[clamp(2.75rem,14vw,7.8rem)] text-ink"
+                className="display break-words text-[clamp(2.5rem,13vw,7.8rem)] text-ink"
               />
             ) : (
-              <h1 className="display break-words text-[clamp(2.75rem,14vw,7.8rem)] text-ink">
+              <h1 className="display break-words text-[clamp(2.5rem,13vw,7.8rem)] text-ink">
                 {site.name}
               </h1>
             )}
-            <span className="display mt-1 block text-[clamp(1.4rem,7vw,4rem)] tracking-wide text-ink/30">
+            <span className="display mt-1 block text-[clamp(1.25rem,6.5vw,4rem)] tracking-wide text-ink/30">
               Kulal
             </span>
           </motion.div>
 
           <motion.p
             variants={heroItem}
-            className="relative mt-4 max-w-xl text-sm leading-relaxed text-dim sm:mt-5 sm:text-base md:text-lg"
+            className="relative mt-4 max-w-xl text-[0.9375rem] leading-relaxed text-dim sm:mt-5 sm:text-base md:text-lg"
           >
             {site.summary}
           </motion.p>
 
           <motion.div
             variants={heroItem}
-            className="relative mt-6 flex flex-col gap-3 min-[400px]:flex-row min-[400px]:flex-wrap sm:mt-8"
+            className="relative mt-6 flex w-full flex-col gap-3 sm:mt-8 sm:flex-row sm:flex-wrap"
           >
-            <Magnetic className="w-full min-[400px]:w-auto">
+            <Magnetic className="w-full sm:w-auto">
               <a
                 href="#projects"
-                className="ink-btn inline-flex w-full items-center justify-center gap-2 rounded-sm px-5 py-3 text-xs min-[400px]:w-auto"
+                className="ink-btn inline-flex w-full items-center justify-center gap-2 rounded-sm px-5 py-3.5 text-xs sm:w-auto sm:py-3"
               >
                 View projects <ArrowRight className="h-3.5 w-3.5" />
               </a>
             </Magnetic>
-            <Magnetic className="w-full min-[400px]:w-auto">
+            <Magnetic className="w-full sm:w-auto">
               <a
                 href={`mailto:${site.email}`}
-                className="outline-btn inline-flex w-full items-center justify-center gap-2 rounded-sm px-5 py-3 text-xs min-[400px]:w-auto"
+                className="outline-btn inline-flex w-full items-center justify-center gap-2 rounded-sm px-5 py-3.5 text-xs sm:w-auto sm:py-3"
               >
                 Email me ↓
               </a>
@@ -229,7 +244,7 @@ export function Hero() {
 
           <motion.p
             variants={heroItem}
-            className="mono relative mt-6 text-[10px] leading-relaxed tracking-wide text-dim sm:mt-7 sm:text-[11px]"
+            className="mono relative mt-5 text-[10px] leading-relaxed tracking-wide text-dim sm:mt-7 sm:text-[11px]"
           >
             {site.tags.join(" · ")}
           </motion.p>
@@ -239,7 +254,7 @@ export function Hero() {
           variants={heroItem}
           ref={portraitRef}
           style={{ y: portraitY, scale: portraitScale }}
-          className="relative mx-auto w-full max-w-[280px] sm:max-w-[340px] md:max-w-[440px]"
+          className="relative mx-auto w-full max-w-[240px] min-[400px]:max-w-[280px] sm:max-w-[340px] md:max-w-[440px]"
         >
           <div className="relative aspect-[4/5] overflow-hidden">
             <Image
@@ -252,8 +267,8 @@ export function Hero() {
             />
             <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4 right-4 sm:bottom-5 sm:left-5 sm:right-auto">
-              <p className="label text-[10px] text-volt">{site.fullName}</p>
-              <p className="mt-1 text-xs text-paper/85">{site.location}</p>
+              <p className="label text-[9px] text-volt sm:text-[10px]">{site.fullName}</p>
+              <p className="mt-1 text-[11px] text-paper/85 sm:text-xs">{site.location}</p>
             </div>
           </div>
         </motion.div>
