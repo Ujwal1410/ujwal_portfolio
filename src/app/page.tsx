@@ -7,13 +7,11 @@ import { Navbar } from "@/components/Navbar";
 import { Projects } from "@/components/Projects";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { Stack } from "@/components/Stack";
-import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Home() {
   return (
     <>
       <Navbar />
-      <ThemeToggle />
       <ScrollProgress />
       <Assistant />
       <main>

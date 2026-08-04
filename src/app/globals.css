@@ -47,6 +47,7 @@
 
 html {
   scroll-behavior: auto;
+  -webkit-text-size-adjust: 100%;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -60,6 +61,17 @@ body {
   color: var(--ink);
   font-family: var(--font-archivo), system-ui, sans-serif;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Prevent long emails / URLs from blowing out the layout on narrow screens */
+a,
+p,
+li,
+h1,
+h2,
+h3 {
+  overflow-wrap: anywhere;
 }
 
 ::selection {
@@ -93,7 +105,13 @@ body {
 }
 
 .section-pad {
-  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+  padding-inline: clamp(1rem, 4vw, 3.5rem);
+}
+
+@media (max-width: 379px) {
+  .section-pad {
+    padding-inline: 0.875rem;
+  }
 }
 
 .container-wide {
@@ -150,6 +168,11 @@ body {
 .ink-btn:hover {
   transform: translateY(-2px);
   opacity: 0.9;
+}
+
+.project-card-shine {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.35s ease, background 0.35s ease;
 }
 
 .nav-link {
