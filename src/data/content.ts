@@ -12,15 +12,15 @@ export const site = {
   photo: "/images/ujwal-profile.png",
   tagline: "Building solutions · Writing code · Solving problems · Creating impact",
   summary:
-    "I build production-scale AI assessment platforms, real-time proctoring systems, and self-hosted infrastructure. Microservices, async processing, ML/RAG pipelines, and DevOps — designed for 10,000+ concurrent users.",
-  tags: ["FASTAPI", "NEXT.JS", "TYPESCRIPT", "REDIS", "RAG", "DOCKER"],
+    "I ship production AI assessment platforms, live proctoring, RAG evaluation pipelines, and self-hosted object storage at Gisul — plus personal voice and ML products. Microservices, async jobs, model serving, and DevOps built for real concurrent load.",
+  tags: ["FASTAPI", "NEXT.JS", "TYPESCRIPT", "REDIS", "RAG", "DOCKER", "SEAWEEDFS"],
 };
 
 export const metrics = [
-  { label: "Concurrent users", value: "10K+" },
+  { label: "Competency domains", value: "8+" },
   { label: "Live proctoring sessions", value: "1K+" },
-  { label: "Object storage", value: "100TB+" },
-  { label: "Platform uptime", value: "99.8%" },
+  { label: "Object storage capacity", value: "100TB+" },
+  { label: "Large uploads supported", value: "10GB+" },
 ];
 
 export const journeyProblem = {
@@ -30,19 +30,19 @@ export const journeyProblem = {
   cards: [
     {
       title: "Assessment chaos",
-      items: ["10+ domains", "1K+ questions/mo", "Manual review"],
-    },
-    {
-      title: "Async backlog",
-      items: ["500+ jobs", "High latency", "Queue pressure"],
+      items: ["8+ competencies", "Manual review", "Inconsistent scoring"],
     },
     {
       title: "Proctoring gaps",
-      items: ["Live sessions", "Bandwidth cost", "Inconsistent config"],
+      items: ["Face mismatch", "Live sessions", "Violation noise"],
+    },
+    {
+      title: "Inference backlog",
+      items: ["Async jobs", "High latency", "Queue pressure"],
     },
     {
       title: "Storage limits",
-      items: ["500MB cap", "OOM risk", "Auth mismatches"],
+      items: ["500MB cap", "OOM risk", "Auth / CORS breaks"],
     },
   ],
 };
@@ -74,80 +74,99 @@ export const processSteps = [
   },
 ];
 
+/**
+ * Portfolio projects grounded in local git evidence from:
+ * - C:\\Gisul\\Aaptor (Ujwal author commits)
+ * - C:\\Gisul\\seaweedfs_prod_clean (Gisul production deploy)
+ * - C:\\Sarastra\\voice-based-assistant, finsight, disease-prediction-ml
+ */
 export const projects = [
   {
     id: "01",
-    tag: "Platform",
-    title: "AI Assessment Platform",
+    tag: "Platform · Gisul",
+    title: "Aaptor AI Assessment",
     description:
-      "Full-stack AI assessment microservices across 10+ engineering domains — RAG retrieval, async evaluation, API gateway metering, and vLLM serving for 10K+ assessments/day.",
-    stack: ["FastAPI", "Next.js", "Redis", "FAISS", "vLLM", "MongoDB"],
+      "End-to-end AIML assessment stack on Aaptor — question generation & evaluation services, competency notebooks, RAG migration to a VM-hosted service, and unified Qwen + OpenAI chat flows across multiple engineering domains.",
+    stack: ["FastAPI", "Next.js", "Redis", "Qwen", "OpenAI", "Docker", "aptor-shared"],
     highlights: [
-      "35% faster evaluation latency",
-      "40% lower inference latency",
-      "$50K+/mo high-throughput revenue enabled",
+      "AIML question generation + evaluation pipelines",
+      "RAG moved to VM service; Qwen + OpenAI unified chat",
+      "Competency notebooks + Dockerized aiml-service",
+      "Global competency rules & shared question-gen modules",
     ],
-    href: "https://github.com/Ujwal1410/AI_Assessment",
+    href: "https://github.com/Ujwal1410",
     hrefLabel: "GitHub",
   },
   {
     id: "02",
-    tag: "Realtime",
+    tag: "Realtime · Gisul",
     title: "Aaptor Live Proctoring",
     description:
-      "LiveKit-based candidate monitoring for 1,000+ concurrent sessions with browser MediaRecorder uploads to S3-compatible storage and reusable React workflows.",
-    stack: ["React", "Next.js", "LiveKit", "MediaRecorder", "S3", "Docker"],
+      "Production live proctoring on Aaptor — identity verification, face-mismatch detection, violation logging, admin live dashboards, and candidate camera/fullscreen gates. Evolved from Agora sessions into LiveKit-based room/token flows.",
+    stack: ["React", "Next.js", "LiveKit", "Agora", "face-api.js", "MediaRecorder", "TypeScript"],
     highlights: [
-      "99.8% uptime",
-      "60% bandwidth savings",
-      "Data consistency 85% → 99.9%",
+      "Face-mismatch detection + identity verification UI",
+      "Violation logs, proctor settings & live dashboards",
+      "Capture-image / camera lock / fullscreen gates",
+      "LiveKit token + room APIs for assessment sessions",
     ],
   },
   {
     id: "03",
-    tag: "Infra",
-    title: "SeaweedFS Object Storage",
+    tag: "Infra · Gisul",
+    title: "SeaweedFS Production Storage",
     description:
-      "Self-hosted SeaweedFS on Linux VMs for 100TB+ capacity — chunked multipart uploads, IAM unification, nginx tuning, and GitHub Actions automation.",
-    stack: ["SeaweedFS", "Docker", "nginx", "S3 API", "IAM", "GitHub Actions"],
+      "Clean Gisul production deploy for self-hosted SeaweedFS — Docker Compose (master/volume/filer/S3/admin), chunked multipart uploads beyond the old 500MB admin limit, nginx + GitHub Actions CI deploy to Linux VMs.",
+    stack: ["SeaweedFS", "Docker", "nginx", "S3 API", "GitHub Actions", "Linux"],
     highlights: [
-      "10K+ daily API requests <200ms",
-      "99.95% storage uptime",
-      "70% lower memory footprint",
+      "Chunked Admin UI uploads (32MB → 80MB chunks; 10GB+ files)",
+      "Patched 500MB admin upload ceiling for production",
+      "Presigned S3 URL + CORS fixes",
+      "CI deploy workflow with secrets-gated VM rollout",
     ],
   },
   {
     id: "04",
-    tag: "Product",
-    title: "Finsight",
+    tag: "Voice",
+    title: "Kannada Bank Voice Kiosk",
     description:
-      "Solo full-stack AI expense intelligence — OCR for Indian bank statements, ML categorization, anomaly detection, and forecasting with JWT + Google OAuth.",
-    stack: ["React", "Vite", "FastAPI", "MongoDB", "scikit-learn", "OCR"],
+      "Voice-first banking kiosk assistant — Kannada-only screen flows, speech engines (including optional Sarvam AI STT/TTS/translation), form capture with date parsing, and kiosk UX for walk-up customers.",
+    stack: ["Python", "FastAPI", "Sarvam AI", "Speech", "Kannada UX"],
     highlights: [
-      "85%+ categorization accuracy",
-      "CSV / PDF / image statements",
-      "Vercel + Render production deploy",
+      "Merged publish PRs as Ujwal1410",
+      "Kannada-only kiosk + VAD speech flow",
+      "Optional Sarvam cloud STT / TTS / translation",
+      "Form + date parsing fixes for bank workflows",
     ],
-    href: "https://finsight-lxofmem9f-akshithakulals-projects.vercel.app/login",
-    hrefLabel: "Live demo",
+    href: "https://github.com/sarastralabs/bank_assistant",
+    hrefLabel: "GitHub",
   },
   {
     id: "05",
-    tag: "ML",
-    title: "GNN Disease Prediction",
+    tag: "Product",
+    title: "Finsight",
     description:
-      "Graph-based medical prediction with GraphSAGE, GCN, and GAT — symptom–disease graphs, Streamlit/Flask inference UI, and scikit-learn evaluation.",
-    stack: ["PyTorch Geometric", "Streamlit", "Flask", "Python", "scikit-learn"],
-    highlights: ["GraphSAGE · GCN · GAT", "Real-time prediction UI"],
+      "Full-stack AI expense intelligence — OCR/parsing for Indian bank statements (incl. Canara-style multi-line PDFs), merchant normalization, ML categorization, and email OTP signup.",
+    stack: ["React", "Vite", "FastAPI", "MongoDB", "OCR", "scikit-learn"],
+    highlights: [
+      "Multi-bank statement detection + PDF row parsing",
+      "Merchant / date / income accuracy fixes",
+      "Email OTP verification for signup",
+      "Deployed on Vercel + Render",
+    ],
+    href: "https://github.com/AkshithaKulal/finsight",
+    hrefLabel: "GitHub",
   },
   {
     id: "06",
-    tag: "Full-stack",
-    title: "Smart E-Learning Platform",
+    tag: "ML",
+    title: "GNN Disease Prediction",
     description:
-      "Role-based learning platform with encrypted auth — admins upload subjects and PDF materials; students register and access content securely.",
-    stack: ["React", "Vite", "Spring Boot", "PostgreSQL", "Tailwind"],
-    highlights: ["Admin / student RBAC", "Secure password encryption"],
+      "Graph-based medical prediction with GraphSAGE, GCN, and GAT — symptom–disease graphs and an interactive inference UI.",
+    stack: ["PyTorch Geometric", "Streamlit", "Flask", "Python", "scikit-learn"],
+    highlights: ["GraphSAGE · GCN · GAT", "Real-time prediction UI"],
+    href: "https://github.com/AkshithaKulal/disease-prediction-ml",
+    hrefLabel: "GitHub",
   },
 ];
 
@@ -157,10 +176,12 @@ export const experience = [
     company: "Gisul",
     location: "Bangalore",
     role: "Associate Software Engineer",
+    current: true,
     points: [
-      "Shipping AI assessment, live proctoring, and self-hosted object storage used at production scale.",
-      "Owning microservices, RAG pipelines, Redis async jobs, LiveKit sessions, and SeaweedFS IAM/uploads.",
-      "Resolving P1 production incidents (storage, nginx, env deploys) under a <2 hour SLA.",
+      "Own Aaptor AIML assessment flows: question generation, evaluation, competency notebooks, and RAG/VM model serving (Qwen + OpenAI).",
+      "Ship live proctoring features — face-mismatch, identity verification, violation logs, and LiveKit/Agora session tooling used in production assessments.",
+      "Operate SeaweedFS production storage: Docker/nginx deploy, chunked 10GB+ uploads, S3/CORS fixes, and GitHub Actions rollout to Linux VMs.",
+      "Support adjacent Gisul platforms (aiml-agent-service deploys, proctoring monitoring) and P1 incident fixes under tight SLAs.",
     ],
   },
 ];
@@ -170,7 +191,7 @@ export const education = [
     school: "Canara Engineering College, Mangalore",
     degree: "Bachelor of Engineering",
     period: "Dec 2021 — Present",
-    meta: "CGPA 8.68 · 3rd year",
+    meta: "CGPA 8.68",
   },
   {
     school: "S.V.S Pre-University College, Bantwal",
@@ -189,7 +210,7 @@ export const stackGroups = [
       "Vite",
       "TypeScript",
       "Tailwind",
-      "MediaRecorder",
+      "face-api.js",
     ],
   },
   {
@@ -197,31 +218,39 @@ export const stackGroups = [
     items: [
       "FastAPI",
       "Python",
-      "Spring Boot",
-      "Java",
+      "Node / API gateway",
       "Microservices",
       "Redis queues",
+      "PostgreSQL / MongoDB",
     ],
   },
   {
     title: "AI & Data",
-    items: ["RAG", "FAISS", "vLLM", "scikit-learn", "OCR", "LLM integration"],
+    items: [
+      "RAG",
+      "Qwen / vLLM",
+      "OpenAI",
+      "OCR",
+      "Speech (Sarvam)",
+      "scikit-learn",
+    ],
   },
   {
-    title: "Infra & Cloud",
+    title: "Infra & Realtime",
     items: [
       "Docker",
       "nginx",
       "GitHub Actions",
-      "SeaweedFS",
-      "Linux",
-      "S3 / IAM",
+      "SeaweedFS / S3",
+      "LiveKit",
+      "Linux VMs",
     ],
   },
 ];
 
 export const achievements = [
+  "Production owner for Aaptor AIML + live proctoring feature lanes at Gisul",
+  "Built and deployed Gisul SeaweedFS production storage with 10GB+ chunked uploads",
   "Selected for exclusive Java Full-Stack training by 10Seconds",
   "Robo-Soccer workshop trainer for high school students",
-  "College fest RoboSoccer event coordinator",
 ];

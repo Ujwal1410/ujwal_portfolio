@@ -543,11 +543,11 @@ export function Magnetic({
         el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
       }}
       onMouseLeave={(e) => {
-        e.currentTarget.style.transform = "translate(0px, 0px)";
-        e.currentTarget.style.transition =
-          "transform 0.4s cubic-bezier(0.16,1,0.3,1)";
+        const el = e.currentTarget;
+        el.style.transform = "translate(0px, 0px)";
+        el.style.transition = "transform 0.4s cubic-bezier(0.16,1,0.3,1)";
         window.setTimeout(() => {
-          e.currentTarget.style.transition = "";
+          el.style.transition = "";
         }, 400);
       }}
       style={{ transition: "transform 0.1s ease-out" }}

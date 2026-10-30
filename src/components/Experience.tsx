@@ -40,9 +40,11 @@ export function Experience() {
                       {job.company} · {job.location}
                     </p>
                   </div>
-                  <span className="label self-start rounded-sm bg-volt px-2.5 py-1 text-[10px] text-volt-ink">
-                    Current
-                  </span>
+                  {job.current && (
+                    <span className="label self-start rounded-sm bg-volt px-2.5 py-1 text-[10px] text-volt-ink">
+                      Current
+                    </span>
+                  )}
                 </div>
                 <ul className="mt-6 space-y-3">
                   {job.points.map((point) => (
